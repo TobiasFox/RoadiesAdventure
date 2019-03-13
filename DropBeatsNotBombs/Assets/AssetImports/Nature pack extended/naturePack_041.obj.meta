@@ -55,6 +55,16 @@ ModelImporter:
     4300014: Mesh7_Group1_Model
     4300016: Mesh8_Group1_Model
     4300018: Mesh9_Group1_Model
+    6400000: Mesh10_Group1_Model
+    6400002: Mesh1_Group1_Model
+    6400004: Mesh2_Group1_Model
+    6400006: Mesh3_Group1_Model
+    6400008: Mesh4_Group1_Model
+    6400010: Mesh5_Group1_Model
+    6400012: Mesh6_Group1_Model
+    6400014: Mesh7_Group1_Model
+    6400016: Mesh8_Group1_Model
+    6400018: Mesh9_Group1_Model
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -93,7 +103,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 1

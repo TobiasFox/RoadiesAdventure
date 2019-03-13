@@ -10,6 +10,7 @@ ModelImporter:
     2300000: Mesh1_Plate_River_Corner_Model
     3300000: Mesh1_Plate_River_Corner_Model
     4300000: Mesh1_Plate_River_Corner_Model
+    6400000: Mesh1_Plate_River_Corner_Model
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -58,7 +59,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 1

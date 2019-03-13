@@ -30,6 +30,11 @@ ModelImporter:
     4300004: Mesh3_Flower_Tall_Yellow_Model
     4300006: Mesh4_Flower_Tall_Yellow_Model
     4300008: Mesh5_Flower_Tall_Yellow_Model
+    6400000: Mesh1_Flower_Tall_Yellow_Model
+    6400002: Mesh2_Flower_Tall_Yellow_Model
+    6400004: Mesh3_Flower_Tall_Yellow_Model
+    6400006: Mesh4_Flower_Tall_Yellow_Model
+    6400008: Mesh5_Flower_Tall_Yellow_Model
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -73,7 +78,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 1

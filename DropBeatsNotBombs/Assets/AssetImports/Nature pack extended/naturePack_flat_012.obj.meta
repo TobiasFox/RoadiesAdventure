@@ -25,6 +25,10 @@ ModelImporter:
     4300002: Mesh2_Group1_Model
     4300004: Mesh3_Group1_Model
     4300006: Mesh4_Group1_Model
+    6400000: Mesh1_Group1_Model
+    6400002: Mesh2_Group1_Model
+    6400004: Mesh3_Group1_Model
+    6400006: Mesh4_Group1_Model
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -63,7 +67,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 1
