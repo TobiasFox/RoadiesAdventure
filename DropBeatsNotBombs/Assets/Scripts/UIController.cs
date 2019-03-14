@@ -12,7 +12,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private ParticleSystem[] _moodParticles;
 
 
-    private float _bonusTime { get; set; }
+    public float _bonusTime { get; set; }
     private Instrument _instrument = Instrument.Empty;
     private bool _gameover = false;
 

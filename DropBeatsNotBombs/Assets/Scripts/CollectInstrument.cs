@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class CollectInstrument : MonoBehaviour
 {
+    [SerializeField] private int _instrumentsCountToWin = 4;
+
     private Instrument instrument = Instrument.Empty;
     private AudioSource[] audioSources;
     private int instrumentCount = 0;
     private List<Instrument> instrumentsList = new List<Instrument>();
+    private AudioManager _audioManager;
+    [SerializeField] private float _bonusTimeForInstrument = 60;
 
     private void Awake()
     {
         audioSources = transform.GetChild(2).GetComponents<AudioSource>();
+        _audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,6 +37,7 @@ public class CollectInstrument : MonoBehaviour
                 instrumentsList.Add(instrument);
                 Destroy(other.gameObject);
                 Debug.Log("add instrument " + instrument.ToString());
+                FindObjectOfType<UIController>().SetNewInstrument(instrument);
             }
         }
 
@@ -41,15 +47,27 @@ public class CollectInstrument : MonoBehaviour
             {
                 audioSources[(int)instrument].mute = false;
                 instrumentCount++;
+                FindObjectOfType<UIController>()._bonusTime += _bonusTimeForInstrument;
 
-                if (instrumentCount >= 4)
+                if (instrumentCount >= _instrumentsCountToWin)
                 {
-                    audioSources[0].mute = false;
+                    Win();
                 }
 
                 instrument = Instrument.Empty;
             }
         }
+
+
+    }
+
+    private void Win()
+    {
+        audioSources[0].mute = false;
+        _audioManager.Play("Applause");
+        //TODO geht auch schöner! (refactoring)
+        Dialog gameOverDialog = new Dialog("You made it! The croud is amused and you made it possible. Thank you so much!");
+        FindObjectOfType<DialogManager>().StartDielogue(gameOverDialog);
     }
 
 }
