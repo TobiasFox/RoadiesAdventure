@@ -1,0 +1,176 @@
+fileFormatVersion: 2
+guid: e4c32e69f2af558479bfc214b273f61b
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Body
+    100004: Bridge
+    100006: Ebene
+    100008: Ebene_1
+    100010: Ebene_2
+    100012: Ebene_3
+    100014: Neck
+    100016: Strings
+    100018: Tuner
+    100020: Tuner_2
+    100022: Tuner_3
+    100024: Tuner_4
+    100026: tuners
+    400000: //RootNode
+    400002: Body
+    400004: Bridge
+    400006: Ebene
+    400008: Ebene_1
+    400010: Ebene_2
+    400012: Ebene_3
+    400014: Neck
+    400016: Strings
+    400018: Tuner
+    400020: Tuner_2
+    400022: Tuner_3
+    400024: Tuner_4
+    400026: tuners
+    2100000: Metal
+    2100002: Drumheads
+    2100004: Chime
+    2100006: Body
+    2300000: Body
+    2300002: Bridge
+    2300004: Ebene
+    2300006: Ebene_1
+    2300008: Ebene_2
+    2300010: Ebene_3
+    2300012: Neck
+    2300014: Tuner
+    2300016: Tuner_2
+    2300018: Tuner_3
+    2300020: Tuner_4
+    3300000: Body
+    3300002: Bridge
+    3300004: Ebene
+    3300006: Ebene_1
+    3300008: Ebene_2
+    3300010: Ebene_3
+    3300012: Neck
+    3300014: Tuner
+    3300016: Tuner_2
+    3300018: Tuner_3
+    3300020: Tuner_4
+    4300000: Ebene_3
+    4300002: Ebene_2
+    4300004: Ebene_1
+    4300006: Ebene
+    4300008: Bridge
+    4300010: Tuner
+    4300012: Tuner_2
+    4300014: Tuner_3
+    4300016: Tuner_4
+    4300018: Neck
+    4300020: Body
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 66b555e53baa19141912b4ee39048c3d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chime
+    second: {fileID: 2100000, guid: 0f35a7452f1e86445935f4127d535dad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Drumheads
+    second: {fileID: 2100000, guid: 47e3ccc345b9d5c498497567871a51fc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 6805e11f071a47040a217d23f7dff768, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
