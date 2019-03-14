@@ -11,10 +11,14 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _dialogueText;
 
     private Queue<string> sentences;
+    private AudioManager _audioManager;
+
     // Start is called before the first frame update
     void Start()
     {
         sentences = new Queue<string>();
+        _audioManager = FindObjectOfType<AudioManager>();
+        
     }
 
     private void Update()
@@ -29,6 +33,7 @@ public class DialogManager : MonoBehaviour
     {
         Debug.Log("Starting conversation");
 
+        _audioManager.Play("OpenDialogue");
         sentences.Clear();
 
         _animator.SetBool("IsOpen", true);
