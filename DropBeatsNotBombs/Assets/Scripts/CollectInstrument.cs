@@ -8,22 +8,34 @@ public class CollectInstrument : MonoBehaviour
     private Instrument instrument = Instrument.Empty;
     private AudioSource[] audioSources;
     private int instrumentCount = 0;
+    private List<Instrument> instrumentsList = new List<Instrument>();
 
     private void Awake()
     {
         audioSources = transform.GetChild(2).GetComponents<AudioSource>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        string _tagName = collision.gameObject.tag;
-        if (_tagName.Equals("Instrument"))
+        string tagName = other.gameObject.tag;
+        if (tagName.Equals("Instrument"))
         {
-            Enum.TryParse(collision.gameObject.name, out instrument);
-            Destroy(collision.gameObject);
+            if (other.gameObject.name.Equals("synth"))
+            {
+                var blinkManager = other.gameObject.GetComponent<BlinkManager>();
+                blinkManager.cam.gameObject.SetActive(true);
+                blinkManager.StartBlinking();
+            }
+            else
+            {
+                Enum.TryParse(other.gameObject.name, out instrument);
+                instrumentsList.Add(instrument);
+                Destroy(other.gameObject);
+                Debug.Log("add instrument " + instrument.ToString());
+            }
         }
 
-        if (_tagName.Equals("Delivery_Point"))
+        if (tagName.Equals("Delivery_Point"))
         {
             if (instrument != Instrument.Empty)
             {
@@ -39,4 +51,5 @@ public class CollectInstrument : MonoBehaviour
             }
         }
     }
+
 }
