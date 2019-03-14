@@ -61,6 +61,7 @@ public class CollectInstrument : MonoBehaviour
                 instrumentCount++;
                 uIController._bonusTime += _bonusTimeForInstrument;
                 uIController.SetNewInstrument(Instrument.Empty);
+                other.GetComponent<DeliveryPoint>().ActivateInstrument(instrument);
 
                 if (instrumentCount >= _instrumentsCountToWin)
                 {
