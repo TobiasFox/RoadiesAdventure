@@ -14,6 +14,7 @@ public class CollectInstrument : MonoBehaviour
     private AudioManager _audioManager;
     [SerializeField] private float _bonusTimeForInstrument = 60;
     private UIController uIController;
+    private DialogManager dialogManager;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class CollectInstrument : MonoBehaviour
         audioSources = audioGO.GetComponents<AudioSource>();
         _audioManager = FindObjectOfType<AudioManager>();
         uIController = FindObjectOfType<UIController>();
+        dialogManager = FindObjectOfType<DialogManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,6 +30,13 @@ public class CollectInstrument : MonoBehaviour
         string tagName = other.gameObject.tag;
         if (tagName.Equals("Instrument"))
         {
+            if (instrument != Instrument.Empty)
+            {
+                Dialog gameOverDialog = new Dialog("You already carry an instrument. Bring it back to the stage before you can carry the next one.");
+                dialogManager.StartDielogue(gameOverDialog);
+                return;
+            }
+
             if (other.gameObject.name.Equals("synth"))
             {
                 var blinkManager = other.gameObject.GetComponent<BlinkManager>();
@@ -36,9 +45,9 @@ public class CollectInstrument : MonoBehaviour
             }
             else
             {
-                Enum.TryParse(other.gameObject.name, out instrument);
+                Enum.TryParse(other.transform.parent.name, out instrument);
                 instrumentsList.Add(instrument);
-                Destroy(other.gameObject);
+                Destroy(other.transform.parent.gameObject);
                 Debug.Log("add instrument " + instrument.ToString());
                 uIController.SetNewInstrument(instrument);
             }
@@ -71,7 +80,7 @@ public class CollectInstrument : MonoBehaviour
         _audioManager.Play("Applause");
         //TODO geht auch schöner! (refactoring)
         Dialog gameOverDialog = new Dialog("You made it! The croud is amused and you made it possible. Thank you so much!");
-        FindObjectOfType<DialogManager>().StartDielogue(gameOverDialog);
+        dialogManager.StartDielogue(gameOverDialog);
     }
 
 }
