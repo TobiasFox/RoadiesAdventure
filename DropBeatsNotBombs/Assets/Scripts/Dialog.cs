@@ -8,4 +8,8 @@ public class Dialog
     [TextArea(3, 10)]
     public string[] sentences;
 
+    public Dialog(string sentence)
+    {
+        sentences = new string[] { sentence };
+    }
 }

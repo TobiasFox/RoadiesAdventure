@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,10 +11,13 @@ public class UIController : MonoBehaviour
 
     private float _bonusTime { get; set; }
     private Instrument _instrument = Instrument.Empty;
+    private bool _gameover = false;
 
     private float _crowdMood;
+
     [SerializeField] private Image _inventoryImage; 
     [Tooltip("Use the same indexes as the Instrument enum: Empty, Drums, Bass, Synthesizer1, Synthesizer2")] [SerializeField] private Sprite[] _instrumentImages;
+    [SerializeField] private ParticleSystem[] _moodParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +28,15 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _crowdMood = (_crowdMoodTotalTimeInSeconds - Time.timeSinceLevelLoad + _bonusTime) / _crowdMoodTotalTimeInSeconds;
+        _crowdMood = Mathf.Clamp((_crowdMoodTotalTimeInSeconds - Time.timeSinceLevelLoad + _bonusTime), 0, float.MaxValue) / _crowdMoodTotalTimeInSeconds;
         _moodSlider.value = _crowdMood;
 
+        UpdateMoodParticles();
+        if(_crowdMood == 0 && !_gameover)
+        {
+            GameOver();
+        }
+        
         //only for testing:
         
         //Adding bonus time
@@ -39,7 +47,30 @@ public class UIController : MonoBehaviour
         //change inventory
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SetNewInstrument((Instrument)Random.Range(0, _instrumentImages.Length));
+            SetNewInstrument((Instrument)UnityEngine.Random.Range(0, _instrumentImages.Length));
+        }
+    }
+
+    private void UpdateMoodParticles()
+    {
+        int moodParticlesIndex = (int) Math.Round(_moodParticles.Length * _crowdMood);
+
+        for(int i = 0; i<_moodParticles.Length; i++)
+        {
+            ParticleSystem particleSys = _moodParticles[i];
+            if(i== moodParticlesIndex)
+            {
+                if(particleSys.isPlaying)
+                {
+                    return;
+                }
+                particleSys.Play();
+                Debug.Log("Play particle system: " + _moodParticles.Length * _crowdMood);
+            }
+            else
+            {
+                particleSys.Stop();
+            }
         }
     }
 
@@ -47,5 +78,13 @@ public class UIController : MonoBehaviour
     {
         _instrument = instrument;
         _inventoryImage.sprite = _instrumentImages[(int)instrument];
+    }
+
+    private void GameOver()
+    {
+        _gameover = true;
+        //TODO geht auch schöner! (refactoring)
+        Dialog gameOverDialog = new Dialog("Game Over");
+        FindObjectOfType<DialogManager>().StartDielogue(gameOverDialog);
     }
 }
