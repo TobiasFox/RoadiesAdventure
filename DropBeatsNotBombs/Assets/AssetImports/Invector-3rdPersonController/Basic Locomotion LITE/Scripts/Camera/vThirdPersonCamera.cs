@@ -197,24 +197,24 @@ public class vThirdPersonCamera : MonoBehaviour
         }
 
         //Check if desired target position is not blocked       
-        if (CullingRayCast(desired_cPos, oldPoints, out hitInfo, distance + 0.2f, cullingLayer, Color.blue))
-        {
-            distance = hitInfo.distance - 0.2f;
-            if (distance < defaultDistance)
-            {
-                var t = hitInfo.distance;
-                t -= cullingMinDist;
-                t /= cullingMinDist;
-                currentHeight = Mathf.Lerp(cullingHeight, height, Mathf.Clamp(t, 0.0f, 1.0f));
-                current_cPos = currentTargetPos + new Vector3(0, currentHeight, 0);
-            }
-        }
+        //if (CullingRayCast(desired_cPos, oldPoints, out hitInfo, distance + 0.2f, cullingLayer, Color.blue))
+        //{
+        //    distance = hitInfo.distance - 0.2f;
+        //    if (distance < defaultDistance)
+        //    {
+        //        var t = hitInfo.distance;
+        //        t -= cullingMinDist;
+        //        t /= cullingMinDist;
+        //        currentHeight = Mathf.Lerp(cullingHeight, height, Mathf.Clamp(t, 0.0f, 1.0f));
+        //        current_cPos = currentTargetPos + new Vector3(0, currentHeight, 0);
+        //    }
+        //}
         else
         {
             currentHeight = height;
         }
         //Check if target position with culling height applied is not blocked
-        if (CullingRayCast(current_cPos, planePoints, out hitInfo, distance, cullingLayer, Color.cyan)) distance = Mathf.Clamp(cullingDistance, 0.0f, defaultDistance);
+        //if (CullingRayCast(current_cPos, planePoints, out hitInfo, distance, cullingLayer, Color.cyan)) distance = Mathf.Clamp(cullingDistance, 0.0f, defaultDistance);
         var lookPoint = current_cPos + targetLookAt.forward * 2f;
         lookPoint += (targetLookAt.right * Vector3.Dot(camDir * (distance), targetLookAt.right));
         targetLookAt.position = current_cPos;
@@ -241,34 +241,34 @@ public class vThirdPersonCamera : MonoBehaviour
     /// <param name="distance"></param>
     /// <param name="cullingLayer"></param>
     /// <returns></returns>
-    bool CullingRayCast(Vector3 from, ClipPlanePoints _to, out RaycastHit hitInfo, float distance, LayerMask cullingLayer, Color color)
-    {
-        bool value = false;
+    //bool CullingRayCast(Vector3 from, ClipPlanePoints _to, out RaycastHit hitInfo, float distance, LayerMask cullingLayer, Color color)
+    //{
+    //    bool value = false;
 
-        if (Physics.Raycast(from, _to.LowerLeft - from, out hitInfo, distance, cullingLayer))
-        {
-            value = true;
-            cullingDistance = hitInfo.distance;
-        }
+    //    if (Physics.Raycast(from, _to.LowerLeft - from, out hitInfo, distance, cullingLayer))
+    //    {
+    //        value = true;
+    //        cullingDistance = hitInfo.distance;
+    //    }
 
-        if (Physics.Raycast(from, _to.LowerRight - from, out hitInfo, distance, cullingLayer))
-        {
-            value = true;
-            if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
-        }
+    //    if (Physics.Raycast(from, _to.LowerRight - from, out hitInfo, distance, cullingLayer))
+    //    {
+    //        value = true;
+    //        if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
+    //    }
 
-        if (Physics.Raycast(from, _to.UpperLeft - from, out hitInfo, distance, cullingLayer))
-        {
-            value = true;
-            if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
-        }
+    //    if (Physics.Raycast(from, _to.UpperLeft - from, out hitInfo, distance, cullingLayer))
+    //    {
+    //        value = true;
+    //        if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
+    //    }
 
-        if (Physics.Raycast(from, _to.UpperRight - from, out hitInfo, distance, cullingLayer))
-        {
-            value = true;
-            if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
-        }
+    //    if (Physics.Raycast(from, _to.UpperRight - from, out hitInfo, distance, cullingLayer))
+    //    {
+    //        value = true;
+    //        if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
+    //    }
 
-        return value;
-    }
+    //    return value;
+    //}
 }
