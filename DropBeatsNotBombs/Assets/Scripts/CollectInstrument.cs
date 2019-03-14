@@ -16,14 +16,23 @@ public class CollectInstrument : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        string _tagName = collision.gameObject.tag;
-        if (_tagName.Equals("Instrument"))
+        string tagName = collision.gameObject.tag;
+        if (tagName.Equals("Instrument"))
         {
-            Enum.TryParse(collision.gameObject.name, out instrument);
-            Destroy(collision.gameObject);
+            if (collision.gameObject.name.Equals("synth"))
+            {
+                var blinkManager = collision.gameObject.GetComponent<BlinkManager>();
+                blinkManager.cam.gameObject.SetActive(true);
+                blinkManager.StartBlinking();
+            }
+            else
+            {
+                Enum.TryParse(collision.gameObject.name, out instrument);
+                Destroy(collision.gameObject);
+            }
         }
 
-        if (_tagName.Equals("Delivery_Point"))
+        if (tagName.Equals("Delivery_Point"))
         {
             if (instrument != Instrument.Empty)
             {
