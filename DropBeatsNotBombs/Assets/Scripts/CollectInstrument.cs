@@ -13,11 +13,14 @@ public class CollectInstrument : MonoBehaviour
     private List<Instrument> instrumentsList = new List<Instrument>();
     private AudioManager _audioManager;
     [SerializeField] private float _bonusTimeForInstrument = 60;
+    private UIController uIController;
 
     private void Awake()
     {
-        audioSources = transform.GetChild(2).GetComponents<AudioSource>();
+        var audioGO = transform.parent.Find("AudioSources");
+        audioSources = audioGO.GetComponents<AudioSource>();
         _audioManager = FindObjectOfType<AudioManager>();
+        uIController = FindObjectOfType<UIController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,7 +40,7 @@ public class CollectInstrument : MonoBehaviour
                 instrumentsList.Add(instrument);
                 Destroy(other.gameObject);
                 Debug.Log("add instrument " + instrument.ToString());
-                FindObjectOfType<UIController>().SetNewInstrument(instrument);
+                uIController.SetNewInstrument(instrument);
             }
         }
 
@@ -47,7 +50,8 @@ public class CollectInstrument : MonoBehaviour
             {
                 audioSources[(int)instrument].mute = false;
                 instrumentCount++;
-                FindObjectOfType<UIController>()._bonusTime += _bonusTimeForInstrument;
+                uIController._bonusTime += _bonusTimeForInstrument;
+                uIController.SetNewInstrument(Instrument.Empty);
 
                 if (instrumentCount >= _instrumentsCountToWin)
                 {

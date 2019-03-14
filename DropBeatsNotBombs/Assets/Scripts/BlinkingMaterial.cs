@@ -6,6 +6,10 @@ public class BlinkingMaterial : MonoBehaviour
 {
     private Renderer rend;
     private float blinkRythm = .5f;
+    private bool startBlinking = false;
+    public Material material1;
+    public Material material2;
+    float duration = .5f;
 
     void Awake()
     {
@@ -14,12 +18,15 @@ public class BlinkingMaterial : MonoBehaviour
 
     public void StartBlinking()
     {
-        StartCoroutine("Blink");
+        //StartCoroutine("Blink");
+        startBlinking = true;
     }
 
     public void StopBlinking()
     {
-        StopCoroutine("Blink");
+        //StopCoroutine("Blink");
+        startBlinking = false;
+        rend.material = material1;
     }
 
     public IEnumerator Blink()
@@ -31,6 +38,17 @@ public class BlinkingMaterial : MonoBehaviour
             rend.enabled = true;
             yield return new WaitForSeconds(blinkRythm);
         }
+    }
+
+    private void Update()
+    {
+        if (!startBlinking)
+        {
+            return;
+        }
+
+        float lerp = Mathf.PingPong(Time.time, duration) / duration;
+        rend.material.Lerp(material2, material1, lerp);
     }
 
 }
