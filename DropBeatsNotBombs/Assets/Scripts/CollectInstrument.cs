@@ -8,12 +8,12 @@ public class CollectInstrument : MonoBehaviour
     private Instrument instrument = Instrument.Empty;
     private AudioSource[] audioSources;
     private int instrumentCount = 0;
+    private List<Instrument> instrumentsList = new List<Instrument>();
 
     private void Awake()
     {
         audioSources = transform.GetChild(2).GetComponents<AudioSource>();
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +29,9 @@ public class CollectInstrument : MonoBehaviour
             else
             {
                 Enum.TryParse(other.gameObject.name, out instrument);
+                instrumentsList.Add(instrument);
                 Destroy(other.gameObject);
+                Debug.Log("add instrument " + instrument.ToString());
             }
         }
 
@@ -49,8 +51,5 @@ public class CollectInstrument : MonoBehaviour
             }
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
 
-    }
 }
