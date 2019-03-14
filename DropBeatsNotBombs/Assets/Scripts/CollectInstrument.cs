@@ -14,21 +14,22 @@ public class CollectInstrument : MonoBehaviour
         audioSources = transform.GetChild(2).GetComponents<AudioSource>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        string tagName = collision.gameObject.tag;
+        string tagName = other.gameObject.tag;
         if (tagName.Equals("Instrument"))
         {
-            if (collision.gameObject.name.Equals("synth"))
+            if (other.gameObject.name.Equals("synth"))
             {
-                var blinkManager = collision.gameObject.GetComponent<BlinkManager>();
+                var blinkManager = other.gameObject.GetComponent<BlinkManager>();
                 blinkManager.cam.gameObject.SetActive(true);
                 blinkManager.StartBlinking();
             }
             else
             {
-                Enum.TryParse(collision.gameObject.name, out instrument);
-                Destroy(collision.gameObject);
+                Enum.TryParse(other.gameObject.name, out instrument);
+                Destroy(other.gameObject);
             }
         }
 
@@ -47,5 +48,9 @@ public class CollectInstrument : MonoBehaviour
                 instrument = Instrument.Empty;
             }
         }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+
     }
 }
