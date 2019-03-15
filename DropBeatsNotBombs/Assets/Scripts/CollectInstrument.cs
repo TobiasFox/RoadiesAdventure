@@ -29,11 +29,6 @@ public class CollectInstrument : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         string tagName = other.gameObject.tag;
-        //if (tagName.Equals("Finish"))
-        //{
-        //    GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
-        //    return;
-        //}
 
         if (tagName.Equals("Instrument"))
         {
@@ -53,7 +48,7 @@ public class CollectInstrument : MonoBehaviour
 
                 GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
             }
-            if (other.gameObject.name.Equals("Drums"))
+            else if (other.gameObject.name.Equals("Drums"))
             {
 
                 other.GetComponent<Drums>().ShowUI();
@@ -62,7 +57,7 @@ public class CollectInstrument : MonoBehaviour
                 Cursor.visible = true;
                 gameObject.GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
             }
-            if (other.gameObject.name.Equals("Bass"))
+            else if (other.gameObject.name.Equals("Bass"))
             {
 
                 other.GetComponent<Bass>().ShowUI();
