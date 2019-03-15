@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class BlinkingMaterial : MonoBehaviour
 {
-    private Renderer rend;
-    private bool startBlinking = false;
-    public Material material1;
-    public Material material2;
-    float duration = .3f;
-    private static float startTime;
+    private Renderer _rend;
+    private bool _startBlinking = false;
+    public Material _material1;
+    public Material _material2;
+    float _duration = .3f;
+    private static float START_TIME;
 
     void Awake()
     {
-        rend = gameObject.GetComponent<Renderer>();
-        startTime = Time.time;
+        _rend = gameObject.GetComponent<Renderer>();
+        START_TIME = Time.time;
     }
 
     public void StartBlinking()
     {
-        startBlinking = true;
+        _startBlinking = true;
     }
 
     public void StopBlinking()
     {
-        startBlinking = false;
-        rend.material = material2;
+        _startBlinking = false;
+        _rend.material = _material2;
     }
 
     private void Update()
     {
-        if (!startBlinking)
+        if (!_startBlinking)
         {
             return;
         }
 
-        float lerp = Mathf.PingPong(startTime - Time.time, duration) / duration;
-        rend.material.Lerp(material1, material2, lerp);
+        float lerp = Mathf.PingPong(START_TIME - Time.time, _duration) / _duration;
+        _rend.material.Lerp(_material1, _material2, lerp);
     }
 
 }
