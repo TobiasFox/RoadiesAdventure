@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Invector.CharacterController;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +44,8 @@ public class CollectInstrument : MonoBehaviour
                 blinkManager.cam.gameObject.SetActive(true);
                 blinkManager.StartBlinking();
                 other.gameObject.SetActive(false);
+
+                GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
             }
             else
             {
@@ -88,6 +91,11 @@ public class CollectInstrument : MonoBehaviour
         instrumentsList.Add(instrument);
         Debug.Log("add instrument " + instrument.ToString());
         uIController.SetNewInstrument(instrument);
+
+        if (instrument == Instrument.Synthesizer1)
+        {
+            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().ResetAndLockMovement(false);
+        }
     }
 
 }
