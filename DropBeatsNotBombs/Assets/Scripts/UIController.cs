@@ -7,22 +7,24 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private float _crowdMoodTotalTimeInSeconds = 500;
     [SerializeField] private Slider _moodSlider;
+    [SerializeField] private Image _inventoryImage; 
+    [Tooltip("Use the same indexes as the Instrument enum: Empty, Drums, Bass, Synthesizer1, Synthesizer2")] [SerializeField] private Sprite[] _instrumentImages;
+    [SerializeField] private ParticleSystem[] _moodParticles;
 
 
-    private float _bonusTime { get; set; }
+    public float _bonusTime { get; set; }
     private Instrument _instrument = Instrument.Empty;
     private bool _gameover = false;
 
     private float _crowdMood;
-
-    [SerializeField] private Image _inventoryImage; 
-    [Tooltip("Use the same indexes as the Instrument enum: Empty, Drums, Bass, Synthesizer1, Synthesizer2")] [SerializeField] private Sprite[] _instrumentImages;
-    [SerializeField] private ParticleSystem[] _moodParticles;
+    private AudioManager _audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
         _crowdMood = 1;
+        _audioManager = FindObjectOfType<AudioManager>();
+        _audioManager.Play("Crowd");
     }
 
     // Update is called once per frame

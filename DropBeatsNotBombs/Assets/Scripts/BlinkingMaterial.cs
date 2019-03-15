@@ -5,32 +5,38 @@ using UnityEngine;
 public class BlinkingMaterial : MonoBehaviour
 {
     private Renderer rend;
-    private float blinkRythm = .5f;
+    private bool startBlinking = false;
+    public Material material1;
+    public Material material2;
+    float duration = .375f;
+    private static float startTime;
 
     void Awake()
     {
         rend = gameObject.GetComponent<Renderer>();
+        startTime = Time.time;
     }
 
     public void StartBlinking()
     {
-        StartCoroutine("Blink");
+        startBlinking = true;
     }
 
     public void StopBlinking()
     {
-        StopCoroutine("Blink");
+        startBlinking = false;
+        rend.material = material2;
     }
 
-    public IEnumerator Blink()
+    private void Update()
     {
-        while (true)
+        if (!startBlinking)
         {
-            rend.enabled = false;
-            yield return new WaitForSeconds(blinkRythm);
-            rend.enabled = true;
-            yield return new WaitForSeconds(blinkRythm);
+            return;
         }
+
+        float lerp = Mathf.PingPong(startTime - Time.time, duration) / duration;
+        rend.material.Lerp(material1, material2, lerp);
     }
 
 }
