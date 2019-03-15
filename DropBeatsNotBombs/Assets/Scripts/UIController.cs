@@ -85,6 +85,7 @@ public class UIController : MonoBehaviour
     private void GameOver()
     {
         _gameover = true;
+        _audioManager.Play("Boo");
         //TODO geht auch schöner! (refactoring)
         Dialog gameOverDialog = new Dialog("Game Over");
         FindObjectOfType<DialogManager>().StartDielogue(gameOverDialog);
