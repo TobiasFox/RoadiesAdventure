@@ -29,6 +29,12 @@ public class CollectInstrument : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         string tagName = other.gameObject.tag;
+        //if (tagName.Equals("Finish"))
+        //{
+        //    GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
+        //    return;
+        //}
+
         if (tagName.Equals("Instrument"))
         {
             if (instrument != Instrument.Empty)
@@ -45,7 +51,7 @@ public class CollectInstrument : MonoBehaviour
                 blinkManager.StartBlinking();
                 other.gameObject.SetActive(false);
 
-                GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
+                GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
             }
             else
             {
@@ -94,7 +100,7 @@ public class CollectInstrument : MonoBehaviour
 
         if (instrument == Instrument.Synthesizer1)
         {
-            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().ResetAndLockMovement(false);
+            GetComponent<vThirdPersonInput>().ResetAndLockMovement(false);
         }
     }
 

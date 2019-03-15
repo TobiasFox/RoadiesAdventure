@@ -12,17 +12,33 @@ public class BlinkManager : MonoBehaviour
     private List<KeyCode> inputKeyCodes = new List<KeyCode>();
     private int currentButton = 0;
     private List<int> inputSequence = new List<int> { 0, 2, 1, 3, 2 };
+    private AudioManager audioManager;
+    private Transform keys;
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         cam = GetComponentInChildren<Camera>();
         cam.gameObject.SetActive(false);
         cam.enabled = true;
+        keys = transform.Find("keys");
 
         foreach (var i in inputSequence)
         {
             Enum.TryParse("Alpha" + (i + 1), out KeyCode keyCode);
             inputKeyCodes.Add(keyCode);
+        }
+    }
+
+    private IEnumerator PlayAndShowKeyboardTone(int key)
+    {
+        var blinkMat = keys.GetChild(key).GetComponent<BlinkingMaterial>();
+        if (blinkMat != null)
+        {
+            audioManager.Play("SynthPuzzle1_" + key);
+            blinkMat.StartBlinking();
+            yield return new WaitForSeconds(.6f);
+            blinkMat.StopBlinking();
         }
     }
 
@@ -32,13 +48,7 @@ public class BlinkManager : MonoBehaviour
 
         foreach (var i in inputSequence)
         {
-            var blinkMat = transform.Find("keys").GetChild(i).GetComponent<BlinkingMaterial>();
-            if (blinkMat != null)
-            {
-                blinkMat.StartBlinking();
-                yield return new WaitForSeconds(.75f);
-                blinkMat.StopBlinking();
-            }
+            yield return PlayAndShowKeyboardTone(i);
         }
 
         inputRequest = true;
@@ -66,6 +76,8 @@ public class BlinkManager : MonoBehaviour
             return;
         }
 
+        PlayKeyboardSound();
+
         if (Input.GetKeyUp(inputKeyCodes[currentButton]))
         {
             currentButton++;
@@ -92,4 +104,23 @@ public class BlinkManager : MonoBehaviour
         }
     }
 
+    private void PlayKeyboardSound()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 3);
+        }
+    }
 }

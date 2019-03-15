@@ -8,7 +8,7 @@ public class BlinkingMaterial : MonoBehaviour
     private bool startBlinking = false;
     public Material material1;
     public Material material2;
-    float duration = .375f;
+    float duration = .3f;
     private static float startTime;
 
     void Awake()
