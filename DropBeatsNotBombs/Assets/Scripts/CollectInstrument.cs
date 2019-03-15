@@ -39,7 +39,7 @@ public class CollectInstrument : MonoBehaviour
                 return;
             }
 
-            if (other.gameObject.name.Equals("Synthesizer1"))
+            if (other.gameObject.name.Equals("Synthesizer1") || other.gameObject.name.Equals("Synthesizer2"))
             {
                 var blinkManager = other.transform.parent.gameObject.GetComponent<BlinkManager>();
                 blinkManager.cam.gameObject.SetActive(true);
@@ -111,7 +111,7 @@ public class CollectInstrument : MonoBehaviour
         Debug.Log("add instrument " + instrument.ToString());
         uIController.SetNewInstrument(instrument);
 
-        if (instrument == Instrument.Synthesizer1)
+        if (instrument == Instrument.Synthesizer1 || instrument == Instrument.Synthesizer2)
         {
             GetComponent<vThirdPersonInput>().ResetAndLockMovement(false);
         }
