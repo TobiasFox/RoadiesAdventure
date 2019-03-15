@@ -10,6 +10,7 @@ namespace Invector.CharacterController
         #region variables
 
         [Header("Default Inputs")]
+        public bool MouseLocked = false;
         public string horizontalInput = "Horizontal";
         public string verticallInput = "Vertical";
         public KeyCode jumpInput = KeyCode.Space;
@@ -153,18 +154,22 @@ namespace Invector.CharacterController
 
         protected virtual void CameraInput()
         {
-            if (tpCamera == null)
-                return;
-            var Y = Input.GetAxis(rotateCameraYInput);
-            var X = Input.GetAxis(rotateCameraXInput);
+            if (!MouseLocked)
+            {
 
-            tpCamera.RotateCamera(X, Y);
+                if (tpCamera == null)
+                    return;
+                var Y = Input.GetAxis(rotateCameraYInput);
+                var X = Input.GetAxis(rotateCameraXInput);
 
-            // tranform Character direction from camera if not KeepDirection
-            if (!keepDirection)
-                cc.UpdateTargetDirection(tpCamera != null ? tpCamera.transform : null);
-            // rotate the character with the camera while strafing        
-            RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
+                tpCamera.RotateCamera(X, Y);
+
+                // tranform Character direction from camera if not KeepDirection
+                if (!keepDirection)
+                    cc.UpdateTargetDirection(tpCamera != null ? tpCamera.transform : null);
+                // rotate the character with the camera while strafing        
+                RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
+            }
         }
 
         protected virtual void UpdateCameraStates()
