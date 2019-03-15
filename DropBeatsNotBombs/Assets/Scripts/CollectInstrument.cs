@@ -37,19 +37,19 @@ public class CollectInstrument : MonoBehaviour
                 return;
             }
 
-            if (other.gameObject.name.Equals("synth"))
+            if (other.gameObject.name.Equals("Synthesizer1"))
             {
-                var blinkManager = other.gameObject.GetComponent<BlinkManager>();
+                var blinkManager = other.transform.parent.gameObject.GetComponent<BlinkManager>();
                 blinkManager.cam.gameObject.SetActive(true);
                 blinkManager.StartBlinking();
+                other.gameObject.SetActive(false);
             }
             else
             {
                 Enum.TryParse(other.transform.parent.name, out instrument);
-                instrumentsList.Add(instrument);
+                AddInstrument(instrument);
+
                 Destroy(other.transform.parent.gameObject);
-                Debug.Log("add instrument " + instrument.ToString());
-                uIController.SetNewInstrument(instrument);
             }
         }
 
@@ -71,8 +71,6 @@ public class CollectInstrument : MonoBehaviour
                 instrument = Instrument.Empty;
             }
         }
-
-
     }
 
     private void Win()
@@ -82,6 +80,14 @@ public class CollectInstrument : MonoBehaviour
         //TODO geht auch schöner! (refactoring)
         Dialog gameOverDialog = new Dialog("You made it! The croud is amused and you made it possible. Thank you so much!");
         dialogManager.StartDielogue(gameOverDialog);
+    }
+
+    public void AddInstrument(Instrument instrument)
+    {
+        this.instrument = instrument;
+        instrumentsList.Add(instrument);
+        Debug.Log("add instrument " + instrument.ToString());
+        uIController.SetNewInstrument(instrument);
     }
 
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,57 +9,45 @@ public class BlinkManager : MonoBehaviour
     public Camera cam;
 
     private bool inputRequest = false;
-    private List<KeyCode> inputOrder = new List<KeyCode>();
+    private List<KeyCode> inputKeyCodes = new List<KeyCode>();
     private int currentButton = 0;
+    private List<int> inputSequence = new List<int> { 0, 2, 1, 3, 2 };
 
     private void Awake()
     {
         cam = GetComponentInChildren<Camera>();
         cam.gameObject.SetActive(false);
+        cam.enabled = true;
+
+        foreach (var i in inputSequence)
+        {
+            Enum.TryParse("Alpha" + (i + 1), out KeyCode keyCode);
+            inputKeyCodes.Add(keyCode);
+        }
     }
 
     public IEnumerator SimpleRoutine()
     {
         yield return new WaitForSeconds(.5f);
 
-        inputOrder.Add(KeyCode.Alpha1);
-        inputOrder.Add(KeyCode.Alpha2);
-        inputOrder.Add(KeyCode.Alpha3);
-        inputOrder.Add(KeyCode.Alpha4);
-
-        for (int i = 0; i < transform.childCount; i++)
+        foreach (var i in inputSequence)
         {
-            var blinkMat = transform.GetChild(i).GetComponent<BlinkingMaterial>();
+            var blinkMat = transform.Find("keys").GetChild(i).GetComponent<BlinkingMaterial>();
             if (blinkMat != null)
             {
                 blinkMat.StartBlinking();
-                yield return new WaitForSeconds(.6f);
+                yield return new WaitForSeconds(.75f);
                 blinkMat.StopBlinking();
             }
         }
+
         inputRequest = true;
-        Debug.Log("start puzzle, wait for: " + inputOrder[currentButton]);
+        Debug.Log("start puzzle, wait for: " + inputKeyCodes[currentButton]);
     }
 
     public void StartBlinking()
     {
         StartCoroutine("SimpleRoutine");
-        //for (int i = 0; i < transform.childCount; i++)
-        //{
-        //    var blinkMat = transform.GetChild(i).GetComponent<BlinkingMaterial>();
-        //    if (blinkMat != null)
-        //    {
-        //        blinkMat.StartBlinking();
-        //    }
-        //}
-    }
-
-    public void StopBlinking()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).GetComponent<BlinkingMaterial>().StopBlinking();
-        }
     }
 
     private void Update()
@@ -68,26 +57,37 @@ public class BlinkManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyUp(inputOrder[currentButton]))
+        if (Input.GetKeyUp(KeyCode.Return))
+        {
+            Debug.Log("show sequence again.");
+            inputRequest = false;
+            currentButton = 0;
+            StartCoroutine("SimpleRoutine");
+            return;
+        }
+
+        if (Input.GetKeyUp(inputKeyCodes[currentButton]))
         {
             currentButton++;
-            Debug.Log(" currentButton " + currentButton);
 
-            if (currentButton >= inputOrder.Capacity)
+            if (currentButton >= inputKeyCodes.Count)
             {
                 Debug.Log("finish puzzle");
                 inputRequest = false;
+
+                Enum.TryParse(gameObject.name, out Instrument instrument);
+                FindObjectOfType<CollectInstrument>().AddInstrument(instrument);
                 Destroy(gameObject);
                 return;
             }
-            Debug.Log(" wait for next input from " + inputOrder[currentButton]);
+            Debug.Log(" wait for next input from " + inputKeyCodes[currentButton]);
         }
         else
         {
-            if (Input.anyKey && !Input.GetKey(inputOrder[currentButton]))
+            if (Input.anyKey && !Input.GetKey(inputKeyCodes[currentButton]))
             {
                 currentButton = 0;
-                Debug.Log("reset puzzle");
+                Debug.Log("reset puzzle, next input from " + inputKeyCodes[currentButton]);
             }
         }
     }
