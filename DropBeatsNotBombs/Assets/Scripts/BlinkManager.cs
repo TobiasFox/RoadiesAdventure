@@ -11,9 +11,10 @@ public class BlinkManager : MonoBehaviour
     private bool inputRequest = false;
     private List<KeyCode> inputKeyCodes = new List<KeyCode>();
     private int currentButton = 0;
-    private List<int> inputSequence = new List<int> { 0, 2, 1, 3, 2 };
+    private List<List<int>> inputSequence = new List<List<int>> { new List<int>() { 0, 2, 1, 3, 2 }, new List<int>() { 3, 0, 2, 1, 3 } };
     private AudioManager audioManager;
     private Transform keys;
+    private int inputSequenceIndex = 0;
 
     private void Awake()
     {
@@ -22,8 +23,9 @@ public class BlinkManager : MonoBehaviour
         cam.gameObject.SetActive(false);
         cam.enabled = true;
         keys = transform.Find("keys");
+        inputSequenceIndex = Int32.Parse(name.Substring(name.Length - 1)) - 1;
 
-        foreach (var i in inputSequence)
+        foreach (var i in inputSequence[inputSequenceIndex])
         {
             Enum.TryParse("Alpha" + (i + 1), out KeyCode keyCode);
             inputKeyCodes.Add(keyCode);
@@ -46,7 +48,7 @@ public class BlinkManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
 
-        foreach (var i in inputSequence)
+        foreach (var i in inputSequence[inputSequenceIndex])
         {
             yield return PlayAndShowKeyboardTone(i);
         }
