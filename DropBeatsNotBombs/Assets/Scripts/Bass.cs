@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Invector.CharacterController;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,16 +51,17 @@ public class Bass : MonoBehaviour
         }
         else
         {
-            //TODO: Destroy Gameobject. Rätsel gelöst
-            Debug.Log("Bestanden");
+            Image_Bass.SetActive(false);
+            Cursor.visible = false;
+            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().MouseLocked = false;
+            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<CollectInstrument>().AddInstrument(Instrument.Bass);
+            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().ResetAndLockMovement(false);
+            Destroy(gameObject);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void ShowUI()
     {
-        if (other.CompareTag("Player"))
-        {
-            Image_Bass.SetActive(true);
-        }
+        Image_Bass.SetActive(true);
     }
     IEnumerator Disableonplay()
     {

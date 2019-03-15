@@ -47,6 +47,24 @@ public class CollectInstrument : MonoBehaviour
 
                 GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
             }
+            if (other.gameObject.name.Equals("Drums"))
+            {
+
+                other.GetComponent<Drums>().ShowUI();
+                Cursor.lockState = CursorLockMode.None;
+                gameObject.GetComponent<vThirdPersonInput>().MouseLocked = true;
+                Cursor.visible = true;
+                gameObject.GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
+            }
+            if (other.gameObject.name.Equals("Bass"))
+            {
+
+                other.GetComponent<Bass>().ShowUI();
+                Cursor.lockState = CursorLockMode.None;
+                gameObject.GetComponent<vThirdPersonInput>().MouseLocked = true;
+                Cursor.visible = true;
+                gameObject.GetComponent<vThirdPersonInput>().ResetAndLockMovement(true);
+            }
             else
             {
                 Enum.TryParse(other.transform.parent.name, out instrument);

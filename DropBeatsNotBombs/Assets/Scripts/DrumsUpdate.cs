@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Invector.CharacterController;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class DrumsUpdate : MonoBehaviour
     public Image Indicator1;
     public Image Indicator2;
     public Image Indicator3;
-
+    public GameObject Drum;
     // Update is called once per frame
 
 
@@ -102,7 +103,12 @@ public class DrumsUpdate : MonoBehaviour
         }
         if (Seconds <= 3 && FirstInput == true && SecondInput == true && ThirdInput == true)
         {
-            Debug.Log("Win");
+            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().MouseLocked = false;
+            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<CollectInstrument>().AddInstrument(Instrument.Drums);
+            GameObject.FindGameObjectWithTag("Player").transform.Find("RoadiePrefab").GetComponent<vThirdPersonInput>().ResetAndLockMovement(false);
+            Cursor.visible = false;
+            Destroy(Drum);
+            gameObject.SetActive(false);
         }
     }
 

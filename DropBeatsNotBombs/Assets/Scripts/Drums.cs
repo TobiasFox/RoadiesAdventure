@@ -5,12 +5,10 @@ using UnityEngine.UI;
 public class Drums : MonoBehaviour
 {
     public GameObject Image_Drums;
-   
-    private void OnTriggerEnter(Collider other)
+
+    public void ShowUI()
     {
-        if (other.CompareTag("Player"))
-        {
-            Image_Drums.SetActive(true);
-        }
+        Image_Drums.SetActive(true);
     }
+
 }
