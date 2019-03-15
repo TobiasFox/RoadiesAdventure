@@ -5,6 +5,7 @@ namespace Invector.CharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        public Vector3 Spawnpoint = Vector3.zero;
         protected virtual void Start()
         {
 #if !UNITY_EDITOR
@@ -44,6 +45,14 @@ namespace Invector.CharacterController
             var newRotation = new Vector3(transform.eulerAngles.x, referenceTransform.eulerAngles.y, transform.eulerAngles.z);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(newRotation), strafeRotationSpeed * Time.fixedDeltaTime);
             targetRotation = transform.rotation;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.CompareTag("Water"))
+            {
+                transform.position = Spawnpoint;
+            }
         }
     }
 }
