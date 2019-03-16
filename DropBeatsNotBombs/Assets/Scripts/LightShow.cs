@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DimmLights : MonoBehaviour
+public class LightShow : MonoBehaviour
 {
     private Light[] _lights;
     private int _currentLight = 0;
