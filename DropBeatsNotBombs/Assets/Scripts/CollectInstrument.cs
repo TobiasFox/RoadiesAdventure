@@ -89,6 +89,8 @@ public class CollectInstrument : MonoBehaviour
     {
         _audioSources[0].mute = false;
         _audioManager.Play("Applause");
+        _uIController.PlayWinParticles();
+
         //TODO geht auch schöner! (refactoring)
         Dialog _winDialog = new Dialog("You made it! The croud is amused and you made it possible. Thank you so much!");
         _dialogManager.StartDielogue(_winDialog);

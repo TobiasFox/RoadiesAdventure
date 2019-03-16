@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private ParticleSystem[] _moodParticles;
     [SerializeField] private ParticleSystem _winParticles;
     [SerializeField] private ParticleSystem _looseParticles;
+    [SerializeField] private GameObject _winButton;
 
 
     public float _bonusTime { get; set; }
@@ -42,9 +43,9 @@ public class UIController : MonoBehaviour
             GameOver();
         }
 
-        if (_gameover && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return)))
+        if ((_gameover && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return))) || Input.GetKeyDown(KeyCode.F5))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            RestartScene();
         }
         //only for testing:
 
@@ -103,5 +104,15 @@ public class UIController : MonoBehaviour
     {
         _winParticles.Play();
 
+    }
+
+    public void ShowWinButoon()
+    {
+        _winButton.SetActive(true);
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
