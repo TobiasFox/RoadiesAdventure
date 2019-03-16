@@ -41,16 +41,16 @@ public class UIController : MonoBehaviour
         
         //only for testing:
         
-        //Adding bonus time
-        if(Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            _bonusTime += 10;
-        }
-        //change inventory
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetNewInstrument((Instrument)UnityEngine.Random.Range(0, _instrumentImages.Length));
-        }
+        ////Adding bonus time
+        //if(Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    _bonusTime += 10;
+        //}
+        ////change inventory
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    SetNewInstrument((Instrument)UnityEngine.Random.Range(0, _instrumentImages.Length));
+        //}
     }
 
     private void UpdateMoodParticles()
