@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
     {
         _crowdMood = 1;
         _audioManager = FindObjectOfType<AudioManager>();
-        _audioManager.Play("Crowd");
+        //_audioManager.Play("Crowd");
     }
 
     // Update is called once per frame

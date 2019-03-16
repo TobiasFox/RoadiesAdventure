@@ -5,6 +5,7 @@ using UnityEngine;
 public class DialogTrigger : MonoBehaviour
 {
     public Dialog dialogue;
+    public bool triggerOnlyOnce;
 
     public void TriggerDialogue()
     {
@@ -16,6 +17,10 @@ public class DialogTrigger : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             TriggerDialogue();
+            if(triggerOnlyOnce)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
