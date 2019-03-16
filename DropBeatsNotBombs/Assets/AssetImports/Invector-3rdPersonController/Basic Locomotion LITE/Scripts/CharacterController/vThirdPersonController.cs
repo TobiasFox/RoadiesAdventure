@@ -51,6 +51,7 @@ namespace Invector.CharacterController
         {
             if(other.CompareTag("Water"))
             {
+                FindObjectOfType<AudioManager>().Play("Splash");
                 transform.position = Spawnpoint;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -39,6 +40,10 @@ public class UIController : MonoBehaviour
             GameOver();
         }
         
+        if(_gameover && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return)))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         //only for testing:
         
         ////Adding bonus time
