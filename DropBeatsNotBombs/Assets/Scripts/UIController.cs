@@ -45,7 +45,7 @@ public class UIController : MonoBehaviour
 
         if ((_gameover && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return))) || Input.GetKeyDown(KeyCode.F5))
         {
-            RestartScene();
+            ChangeScene(SceneManager.GetActiveScene().name);
         }
         //only for testing:
 
@@ -111,8 +111,8 @@ public class UIController : MonoBehaviour
         _winButton.SetActive(true);
     }
 
-    public void RestartScene()
+    public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(sceneName);
     }
 }
