@@ -15,10 +15,12 @@ public class UIController : MonoBehaviour
     [SerializeField] private ParticleSystem _looseParticles;
     [SerializeField] private GameObject _winButton;
 
+    [SerializeField] private GameObject[] _crowd;
 
     public float _bonusTime { get; set; }
     private Instrument _instrument = Instrument.Empty;
     private bool _gameover = false;
+    private bool _win = false;
 
     private float _crowdMood;
     private AudioManager _audioManager;
@@ -34,10 +36,13 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _crowdMood = Mathf.Clamp((_crowdMoodTotalTimeInSeconds - Time.timeSinceLevelLoad + _bonusTime), 0, float.MaxValue) / _crowdMoodTotalTimeInSeconds;
+        if (!_win)
+        {
+            _crowdMood = Mathf.Clamp((_crowdMoodTotalTimeInSeconds - Time.timeSinceLevelLoad + _bonusTime), 0, float.MaxValue) / _crowdMoodTotalTimeInSeconds;
+        }
         _moodSlider.value = _crowdMood;
-
         UpdateMoodParticles();
+        UpdateMoodAnimation();
         if (_crowdMood == 0 && !_gameover)
         {
             GameOver();
@@ -59,6 +64,15 @@ public class UIController : MonoBehaviour
         //{
         //    SetNewInstrument((Instrument)UnityEngine.Random.Range(0, _instrumentImages.Length));
         //}
+    }
+
+    private void UpdateMoodAnimation()
+    {
+        foreach (GameObject gO in _crowd)
+        {
+            gO.GetComponent<Animator>().SetFloat("Mood", _crowdMood);
+        }
+
     }
 
     private void UpdateMoodParticles()
@@ -102,6 +116,8 @@ public class UIController : MonoBehaviour
 
     public void PlayWinParticles()
     {
+        _win = true;
+        _crowdMood = 1;
         _winParticles.Play();
 
     }
