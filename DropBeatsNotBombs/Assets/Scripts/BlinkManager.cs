@@ -8,21 +8,39 @@ public class BlinkManager : MonoBehaviour
     [System.NonSerialized]
     public Camera cam;
 
-    private bool inputRequest = false;
-    private List<KeyCode> inputKeyCodes = new List<KeyCode>();
-    private int currentButton = 0;
-    private List<int> inputSequence = new List<int> { 0, 2, 1, 3, 2 };
+    private bool _inputRequest = false;
+    private List<KeyCode> _inputKeyCodes = new List<KeyCode>();
+    private int _currentButton = 0;
+    private List<List<int>> _inputSequence = new List<List<int>> { new List<int>() { 0, 2, 1, 3, 2 }, new List<int>() { 3, 0, 2, 1, 3 } };
+    private AudioManager _audioManager;
+    private Transform _keys;
+    private int _inputSequenceIndex = 0;
 
     private void Awake()
     {
+        _audioManager = FindObjectOfType<AudioManager>();
         cam = GetComponentInChildren<Camera>();
         cam.gameObject.SetActive(false);
         cam.enabled = true;
+        _keys = transform.Find("keys");
+        _inputSequenceIndex = Int32.Parse(name.Substring(name.Length - 1)) - 1;
 
-        foreach (var i in inputSequence)
+        foreach (var i in _inputSequence[_inputSequenceIndex])
         {
             Enum.TryParse("Alpha" + (i + 1), out KeyCode keyCode);
-            inputKeyCodes.Add(keyCode);
+            _inputKeyCodes.Add(keyCode);
+        }
+    }
+
+    private IEnumerator PlayAndShowKeyboardTone(int key)
+    {
+        var _blinkMat = _keys.GetChild(key).GetComponent<BlinkingMaterial>();
+        if (_blinkMat != null)
+        {
+            _audioManager.Play("SynthPuzzle1_" + key);
+            _blinkMat.StartBlinking();
+            yield return new WaitForSeconds(.6f);
+            _blinkMat.StopBlinking();
         }
     }
 
@@ -30,19 +48,13 @@ public class BlinkManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
 
-        foreach (var i in inputSequence)
+        foreach (var i in _inputSequence[_inputSequenceIndex])
         {
-            var blinkMat = transform.Find("keys").GetChild(i).GetComponent<BlinkingMaterial>();
-            if (blinkMat != null)
-            {
-                blinkMat.StartBlinking();
-                yield return new WaitForSeconds(.75f);
-                blinkMat.StopBlinking();
-            }
+            yield return PlayAndShowKeyboardTone(i);
         }
 
-        inputRequest = true;
-        Debug.Log("start puzzle, wait for: " + inputKeyCodes[currentButton]);
+        _inputRequest = true;
+        Debug.Log("start puzzle, wait for: " + _inputKeyCodes[_currentButton]);
     }
 
     public void StartBlinking()
@@ -52,7 +64,7 @@ public class BlinkManager : MonoBehaviour
 
     private void Update()
     {
-        if (!inputRequest)
+        if (!_inputRequest)
         {
             return;
         }
@@ -60,36 +72,57 @@ public class BlinkManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Return))
         {
             Debug.Log("show sequence again.");
-            inputRequest = false;
-            currentButton = 0;
+            _inputRequest = false;
+            _currentButton = 0;
             StartCoroutine("SimpleRoutine");
             return;
         }
 
-        if (Input.GetKeyUp(inputKeyCodes[currentButton]))
-        {
-            currentButton++;
+        PlayKeyboardSound();
 
-            if (currentButton >= inputKeyCodes.Count)
+        if (Input.GetKeyUp(_inputKeyCodes[_currentButton]))
+        {
+            _currentButton++;
+
+            if (_currentButton >= _inputKeyCodes.Count)
             {
                 Debug.Log("finish puzzle");
-                inputRequest = false;
+                _inputRequest = false;
 
                 Enum.TryParse(gameObject.name, out Instrument instrument);
                 FindObjectOfType<CollectInstrument>().AddInstrument(instrument);
                 Destroy(gameObject);
                 return;
             }
-            Debug.Log(" wait for next input from " + inputKeyCodes[currentButton]);
+            Debug.Log(" wait for next input from " + _inputKeyCodes[_currentButton]);
         }
         else
         {
-            if (Input.anyKey && !Input.GetKey(inputKeyCodes[currentButton]))
+            if (Input.anyKey && !Input.GetKey(_inputKeyCodes[_currentButton]))
             {
-                currentButton = 0;
-                Debug.Log("reset puzzle, next input from " + inputKeyCodes[currentButton]);
+                _currentButton = 0;
+                Debug.Log("reset puzzle, next input from " + _inputKeyCodes[_currentButton]);
             }
         }
     }
 
+    private void PlayKeyboardSound()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            StartCoroutine("PlayAndShowKeyboardTone", 3);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -7,9 +8,12 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private float _crowdMoodTotalTimeInSeconds = 500;
     [SerializeField] private Slider _moodSlider;
-    [SerializeField] private Image _inventoryImage; 
+    [SerializeField] private Image _inventoryImage;
     [Tooltip("Use the same indexes as the Instrument enum: Empty, Drums, Bass, Synthesizer1, Synthesizer2")] [SerializeField] private Sprite[] _instrumentImages;
     [SerializeField] private ParticleSystem[] _moodParticles;
+    [SerializeField] private ParticleSystem _winParticles;
+    [SerializeField] private ParticleSystem _looseParticles;
+    [SerializeField] private GameObject _winButton;
 
 
     public float _bonusTime { get; set; }
@@ -24,7 +28,7 @@ public class UIController : MonoBehaviour
     {
         _crowdMood = 1;
         _audioManager = FindObjectOfType<AudioManager>();
-        _audioManager.Play("Crowd");
+        //_audioManager.Play("Crowd");
     }
 
     // Update is called once per frame
@@ -34,35 +38,39 @@ public class UIController : MonoBehaviour
         _moodSlider.value = _crowdMood;
 
         UpdateMoodParticles();
-        if(_crowdMood == 0 && !_gameover)
+        if (_crowdMood == 0 && !_gameover)
         {
             GameOver();
         }
-        
+
+        if ((_gameover && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return))) || Input.GetKeyDown(KeyCode.F5))
+        {
+            ChangeScene(SceneManager.GetActiveScene().name);
+        }
         //only for testing:
-        
-        //Adding bonus time
-        if(Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            _bonusTime += 10;
-        }
-        //change inventory
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetNewInstrument((Instrument)UnityEngine.Random.Range(0, _instrumentImages.Length));
-        }
+
+        ////Adding bonus time
+        //if(Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    _bonusTime += 10;
+        //}
+        ////change inventory
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    SetNewInstrument((Instrument)UnityEngine.Random.Range(0, _instrumentImages.Length));
+        //}
     }
 
     private void UpdateMoodParticles()
     {
-        int moodParticlesIndex = (int) Math.Round(_moodParticles.Length * _crowdMood);
+        int moodParticlesIndex = (int)Math.Round(_moodParticles.Length * _crowdMood) -1;
 
-        for(int i = 0; i<_moodParticles.Length; i++)
+        for (int i = 0; i < _moodParticles.Length; i++)
         {
             ParticleSystem particleSys = _moodParticles[i];
-            if(i== moodParticlesIndex)
+            if (i == moodParticlesIndex)
             {
-                if(particleSys.isPlaying)
+                if (particleSys.isPlaying)
                 {
                     return;
                 }
@@ -85,8 +93,26 @@ public class UIController : MonoBehaviour
     private void GameOver()
     {
         _gameover = true;
+        _audioManager.Play("Boo");
+        _looseParticles.Play();
         //TODO geht auch schöner! (refactoring)
         Dialog gameOverDialog = new Dialog("Game Over");
         FindObjectOfType<DialogManager>().StartDielogue(gameOverDialog);
+    }
+
+    public void PlayWinParticles()
+    {
+        _winParticles.Play();
+
+    }
+
+    public void ShowWinButoon()
+    {
+        _winButton.SetActive(true);
+    }
+
+    public void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

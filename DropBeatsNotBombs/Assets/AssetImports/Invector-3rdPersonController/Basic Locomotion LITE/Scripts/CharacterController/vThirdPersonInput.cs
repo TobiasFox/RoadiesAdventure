@@ -103,10 +103,16 @@ namespace Invector.CharacterController
                 cc.input.x = 0;
                 cc.input.y = 0;
                 cc.lockMovement = true;
+                cc.Sprint(false);
+                cc.UpdateMotor();
+                cc.UpdateAnimator();
             }
             else
             {
                 cc.lockMovement = false;
+                MoveCharacter();
+                cc.UpdateMotor();
+                cc.UpdateAnimator();
             }
         }
 

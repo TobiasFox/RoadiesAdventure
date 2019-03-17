@@ -250,7 +250,19 @@ namespace Invector.CharacterController
                     if (diferenceRotation < 0 || diferenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
                     var euler = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(euler), freeRotationSpeed * Time.deltaTime);
-                }               
+                }
+
+                if (!isJumping && isGrounded)
+                {
+                    if (isSprinting)
+                    {
+                        FindObjectOfType<AudioManager>().Play("Running");
+                    }
+                    else
+                    {
+                        FindObjectOfType<AudioManager>().Play("Walking");
+                    }
+                }
             }
         }
         protected void ControlSpeed(float velocity)
