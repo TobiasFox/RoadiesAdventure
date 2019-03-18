@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    private bool _isDone = false;
     private AsyncOperation _asyncOperation;
 
     private void Start()
@@ -28,16 +27,7 @@ public class SceneLoader : MonoBehaviour
         _asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         _asyncOperation.allowSceneActivation = false;
 
-        while (!_isDone)
-        {
-            if (_asyncOperation.progress < .9f)
-            {
-                yield return null;
-            }
-            _isDone = true;
-        }
-        Debug.Log("Loading complete");
+        yield return null;
     }
-
 
 }
