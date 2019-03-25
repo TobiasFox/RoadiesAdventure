@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
     [Tooltip("Use the same indexes as the Instrument enum: Empty, Drums, Bass, Synthesizer1, Synthesizer2")] [SerializeField] private Sprite[] _instrumentImages;
     [SerializeField] private ParticleSystem[] _moodParticles;
     [SerializeField] private ParticleSystem _winParticles;
+    [SerializeField] private ParticleSystem _winParticles2;
     [SerializeField] private ParticleSystem _looseParticles;
     [SerializeField] private GameObject _winButton;
 
@@ -119,7 +120,7 @@ public class UIController : MonoBehaviour
         _win = true;
         _crowdMood = 1;
         _winParticles.Play();
-
+        _winParticles2.Play();
     }
 
     public void ShowWinButoon()
