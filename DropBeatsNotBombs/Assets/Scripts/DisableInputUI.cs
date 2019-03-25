@@ -9,10 +9,10 @@ public class DisableInputUI : MonoBehaviour
     [SerializeField] [TextArea] private string[] controlTexts;
     [SerializeField] Sprite[] images;
 
-
     private Text text;
     private Image image;
     private bool isShowingControls = true;
+    private float interval;
 
     void Start()
     {
@@ -27,13 +27,22 @@ public class DisableInputUI : MonoBehaviour
         {
             text.text = controlTexts[i];
             image.sprite = images[i];
+            image.SetNativeSize();
+            interval = Time.time + waitTime;
 
             yield return new WaitUntil(() => GetInput(i));
         }
+        text.gameObject.SetActive(false);
+        image.gameObject.SetActive(false);
     }
 
     private bool GetInput(int step)
     {
+        if (Time.time < interval)
+        {
+            return false;
+        }
+
         switch (step)
         {
             case 0:
