@@ -1,5 +1,7 @@
 # Roadie's Adventure  
-<img src="./RoadiesAdventure/Assets/Screenshots/title.png" width="40%" style="display: block; margin-left: auto; margin-right: auto;">  
+<p align="center">
+    <img src="./RoadiesAdventure/Assets/Screenshots/title.png" width="70%">
+</p>
 <br>
 <br>
 <table style="border: 0px solid black;">
