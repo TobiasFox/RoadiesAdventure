@@ -1,17 +1,17 @@
 # Roadie's Adventure  
-<img src="./DropBeatsNotBombs/Assets/Screenshots/title.png" width="40%" style="display: block; margin-left: auto; margin-right: auto;">  
+<img src="./RoadiesAdventure/Assets/Screenshots/title.png" width="40%" style="display: block; margin-left: auto; margin-right: auto;">  
 <br>
 <br>
 <table style="border: 0px solid black;">
     <tr align="center">
         <td>Discover your surroundings</td>
-        <td>Return an instrument to the stage</td>
-        <td>win the game</td>
+        <td>Return instruments to the stage</td>
+        <td>Win the game</td>
     </tr>
     <tr align="center">
-        <td><img src="./DropBeatsNotBombs/Assets/Screenshots/bass.png"></td>
-        <td><img src="./DropBeatsNotBombs/Assets/Screenshots/synth1.png"></td>
-        <td><img src="./DropBeatsNotBombs/Assets/Screenshots/game_win.png"></td>
+        <td><img src="./RoadiesAdventure/Assets/Screenshots/bass.png"></td>
+        <td><img src="./RoadiesAdventure/Assets/Screenshots/synth1.png"></td>
+        <td><img src="./RoadiesAdventure/Assets/Screenshots/game_win.png"></td>
     </tr>
 </table>  
 <br>
@@ -47,3 +47,4 @@ You are playing a roadie who is searching the missing instruments to get the fes
 This Project was created during a one week game jam in the first semester of the games master ("Time-based Media Games") of the Hamburg University of Applied Sciences. The topic of the game jame is "Drop Beats Not Bombs" and was implemented from a four member team. We used Unity with C#.  
 
 You can see more information on: https://jhartmann.itch.io/rodies-adventure  
+If you have questions or want to report a bug, please send an email to tobiasfox@gmx.net.
